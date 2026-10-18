@@ -1,0 +1,2 @@
+cryptography>=42
+networkx>=3.2

@@ -1,0 +1,255 @@
+{
+  "dataset": {
+    "seed": 42,
+    "n_parcels": 3000,
+    "fraud_share": 0.15,
+    "in_window_share": 0.75,
+    "deeds": 5509,
+    "mutation_apps": 4654,
+    "injected": {
+      "ANACHRONISM": 50,
+      "DOUBLE_SALE": 50,
+      "IMPERSONATION": 50,
+      "RAPID_FLIP": 75,
+      "KHAS_LAND_SALE": 50,
+      "OVERSELL": 50,
+      "PENDING_CASE": 50,
+      "CHAIN_BREAK": 50,
+      "legit_bursts": 40
+    }
+  },
+  "per_type": {
+    "DOUBLE_SALE": {
+      "n": 50,
+      "gate_alert_recall": 1.0,
+      "gate_alert_ci": [
+        0.929,
+        1.0
+      ],
+      "gate_block_recall": 1.0,
+      "gate_correctly_explained": 1.0,
+      "baseline_recall": 0.26,
+      "baseline_ci": [
+        0.159,
+        0.396
+      ]
+    },
+    "CHAIN_BREAK": {
+      "n": 50,
+      "gate_alert_recall": 1.0,
+      "gate_alert_ci": [
+        0.929,
+        1.0
+      ],
+      "gate_block_recall": 1.0,
+      "gate_correctly_explained": 1.0,
+      "baseline_recall": 1.0,
+      "baseline_ci": [
+        0.929,
+        1.0
+      ]
+    },
+    "IMPERSONATION": {
+      "n": 50,
+      "gate_alert_recall": 1.0,
+      "gate_alert_ci": [
+        0.929,
+        1.0
+      ],
+      "gate_block_recall": 1.0,
+      "gate_correctly_explained": 1.0,
+      "baseline_recall": 1.0,
+      "baseline_ci": [
+        0.929,
+        1.0
+      ]
+    },
+    "OVERSELL": {
+      "n": 50,
+      "gate_alert_recall": 0.84,
+      "gate_alert_ci": [
+        0.715,
+        0.917
+      ],
+      "gate_block_recall": 0.8,
+      "gate_correctly_explained": 0.66,
+      "baseline_recall": 0.84,
+      "baseline_ci": [
+        0.715,
+        0.917
+      ]
+    },
+    "ANACHRONISM": {
+      "n": 50,
+      "gate_alert_recall": 0.9,
+      "gate_alert_ci": [
+        0.786,
+        0.957
+      ],
+      "gate_block_recall": 0.9,
+      "gate_correctly_explained": 0.9,
+      "baseline_recall": 0.8,
+      "baseline_ci": [
+        0.67,
+        0.888
+      ]
+    },
+    "RAPID_FLIP": {
+      "n": 75,
+      "gate_alert_recall": 1.0,
+      "gate_alert_ci": [
+        0.951,
+        1.0
+      ],
+      "gate_block_recall": 1.0,
+      "gate_correctly_explained": 1.0,
+      "baseline_recall": 1.0,
+      "baseline_ci": [
+        0.951,
+        1.0
+      ]
+    },
+    "KHAS_LAND_SALE": {
+      "n": 50,
+      "gate_alert_recall": 1.0,
+      "gate_alert_ci": [
+        0.929,
+        1.0
+      ],
+      "gate_block_recall": 1.0,
+      "gate_correctly_explained": 1.0,
+      "baseline_recall": 1.0,
+      "baseline_ci": [
+        0.929,
+        1.0
+      ]
+    },
+    "PENDING_CASE": {
+      "n": 50,
+      "gate_alert_recall": 1.0,
+      "gate_alert_ci": [
+        0.929,
+        1.0
+      ],
+      "gate_block_recall": 0.94,
+      "gate_correctly_explained": 1.0,
+      "baseline_recall": 1.0,
+      "baseline_ci": [
+        0.929,
+        1.0
+      ]
+    }
+  },
+  "overall": {
+    "fraud_deeds": 425,
+    "legit_deeds": 5084,
+    "gate": {
+      "alert_recall": 0.969,
+      "alert_recall_ci": [
+        0.948,
+        0.982
+      ],
+      "block_recall": 0.958,
+      "false_alert_rate": 0.008,
+      "false_alert_ci": [
+        0.006,
+        0.011
+      ],
+      "false_block_rate": 0.002,
+      "measured_precision_alert": 0.909,
+      "measured_block_precision": 0.974,
+      "precision_at_1pct_prevalence": 0.55,
+      "precision_at_3pct_prevalence": 0.789
+    },
+    "baseline": {
+      "alert_recall": 0.871,
+      "alert_recall_ci": [
+        0.835,
+        0.899
+      ],
+      "false_alert_rate": 0.068,
+      "false_alert_ci": [
+        0.062,
+        0.076
+      ],
+      "measured_precision_alert": 0.515,
+      "precision_at_1pct_prevalence": 0.115,
+      "precision_at_3pct_prevalence": 0.284
+    }
+  },
+  "ring_effect": {
+    "stage1_block_precision": 0.979,
+    "stage2_block_precision": 0.974,
+    "stage1_block_recall": 0.76,
+    "stage2_block_recall": 0.958,
+    "stage1_false_alert_rate": 0.008,
+    "stage2_false_alert_rate": 0.008
+  },
+  "lag_window": {
+    "inside_lag_window": {
+      "n": 37,
+      "gate_recall": 1.0,
+      "baseline_recall": 0.027
+    },
+    "outside_lag_window": {
+      "n": 13,
+      "gate_recall": 1.0,
+      "baseline_recall": 0.923
+    },
+    "double_sales_hidden_from_ac_land_view": {
+      "n": 37,
+      "of": 50
+    }
+  },
+  "mutation_gate": {
+    "fraud_apps": 50,
+    "legit_apps": 4604,
+    "alert_recall": 0.98,
+    "alert_recall_ci": [
+      0.895,
+      0.996
+    ],
+    "false_alert_rate": 0.0,
+    "note": "No baseline row: the model assumes AC Land has no live link to the deed ledger."
+  },
+  "ring_discovery": {
+    "true_ring_members": 9,
+    "suspects_found": 9,
+    "true_found": 9,
+    "false_suspects": 0,
+    "recall": 1.0,
+    "precision": 1.0
+  },
+  "caveats": [
+    "Synthetic data with fraud patterns and rates chosen by the authors; not real-world accuracy.",
+    "Baseline is a modelling choice (owner-of-record check on the AC Land view), not a live system.",
+    "Fraud prevalence is stylised for measurement; use the precision-at-prevalence figures for realism.",
+    "Inheritance by unrecorded heirs, power-of-attorney deeds and OCR of scanned records are not modelled."
+  ],
+  "sensitivity_in_window_share": [
+    {
+      "in_window_share": 0.25,
+      "n": 25,
+      "gate_recall": 1.0,
+      "baseline_recall": 0.76
+    },
+    {
+      "in_window_share": 0.5,
+      "n": 25,
+      "gate_recall": 1.0,
+      "baseline_recall": 0.52
+    },
+    {
+      "in_window_share": 0.75,
+      "n": 25,
+      "gate_recall": 1.0,
+      "baseline_recall": 0.36
+    },
+    {
+      "in_window_share": 1.0,
+      "n": 25,
+      "gate_recall": 1.0,
+      "baseline_recall": 0.12
+    }
+  ]
+}
