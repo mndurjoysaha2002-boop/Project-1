@@ -6,7 +6,29 @@ Track: Digital Land Records, Verification & Digitization · Problem statement: *
 
 > **All data in this repository is synthetic (dummy).** No real person, NID, address or land record is collected, used or displayed. No government portal is scraped, queried or tested.
 
+```
+ What the gate shows for a double sale (demo data)
 
+ Draft deed: the seller offers 5.49 decimals (15 Jan 2022)
+
+ SUB-REGISTRY LEDGER (Law Ministry)                total 7.58 decimals
+ +--------------------------------------+---------+------+
+ | Buyer of deed 1:  5.57               | Other   | 0.04 |
+ |                                      | 1.97    | left |
+ +--------------------------------------+---------+------+
+
+ AC LAND KHATIAN (Land Ministry)                   total 7.58 decimals
+ +--------------------------------------+---------+
+ | Seller, not yet mutated:  5.61       | Other   |
+ |                                      | 1.97    |
+ +--------------------------------------+---------+
+
+ The seller holds 0.04 per the registry but 5.61 per the khatian.
+ Double sales hide in this gap.
+
+ VERDICT:  BLOCK registration          Risk score 98/100
+           A khatian-only check would have missed this.
+```
 
 ## Team
 
@@ -66,9 +88,45 @@ Score = highest alert severity + 0.15 × the rest. BLOCK at 70 or more, HOLD at 
 | **Ring detection** | Repeat intermediaries across blocked deeds. |
 | **Evaluation** | Results with an on-screen warning that the data is synthetic. |
 
-| Case note and steps (Bangla) | Insider demo |
-|---|---|
-| ![Bangla case note, investigation steps and officer decision](docs/screenshots/02-case-note-bangla.png) | ![Insider deletes the first sale: the gate shows clear, the ledger check catches it](docs/screenshots/05-ledger-insider-demo.png) |
+What an officer sees under the verdict (shown in English here; the app is Bangla first):
+
+```
+ ALERTS
+   Double sale (92)            The seller already sold 5.57 decimals of this plot
+                               (deed D004522, 2022-01-10). The registry shows 0.04
+                               left, but this deed offers 5.49. The earlier sale is
+                               not yet mutated, so the khatian still shows 5.61;
+                               a khatian-only check would miss this.
+   Linked to a suspect ring (40)   The broker, deed writer and witness keep
+                               appearing on blocked deeds across plots.
+
+ CASE NOTE (template)
+   Decision: Block registration (risk score 98/100)
+   Next step: keep registration on hold until the Sub-Registrar and AC (Land)
+   have jointly checked the papers and the site.
+   Decision support only; it does not determine ownership.
+   The final decision rests with the officer.
+
+ INVESTIGATION STEPS
+   1. get_registry_history     1 earlier deed found in the sub-registry ledger
+   2. get_ac_land_record       AC Land khatian shows 2 holders on that date
+   3. run_detectors            deterministic rules run; 2 alerts
+   4. check_intermediary_ring  link to a suspect ring found
+   5. draft_case_note          note written from templates
+
+ OFFICER DECISION (a human always decides)
+   [ Confirm block ]  [ Request documents ]  [ Release ]    + optional comment
+```
+
+Insider demo from the tamper-proof ledger screen:
+
+```
+ An insider deletes the first sale
+   Second deed, records intact ................ BLOCK registration
+   Same deed after the first sale is deleted .. CLEAR to proceed   <- gate is fooled
+   Ledger integrity check ..................... CAUGHT: index gap, an entry was
+                                                removed or reordered
+```
 
 ### Tamper-evident ledger
 
@@ -118,7 +176,6 @@ app/        engine, ledger, investigator, generator, evaluation, HTTP server
 static/     dashboard (plain HTML, CSS and JavaScript; no CDN, strict Content Security Policy)
 tests/      29 unit and HTTP tests
 data/       eval.json written by app.evaluate
-docs/       screenshots
 ```
 
 Security of the demo server: same-origin Content Security Policy, `nosniff`, strict input validation (bad input returns 400, not 500), path-traversal protection, a 64 KB request limit, no stack traces in responses.
@@ -137,7 +194,18 @@ Security of the demo server: same-origin Content Security Policy, `nosniff`, str
 
 The 95% (Wilson) interval for the gate's recall is 94.8% to 98.2%. Mutation check: 49 of 50 unsupported applications flagged, 0 false alerts on 4,604 legitimate ones. Ring discovery: 9 of 9 planted members found, 0 false suspects.
 
-![Evaluation screen](docs/screenshots/07-evaluation.png)
+Recall by fraud type (gate against the khatian-only check):
+
+```
+ Double sale      gate 100%   khatian-only  26%   <- the two-ledger gain
+ Executed early   gate  90%   khatian-only  80%
+ Oversell         gate  84%   khatian-only  84%
+ Broken chain     gate 100%   khatian-only 100%
+ Look-alike       gate 100%   khatian-only 100%
+ Rapid flipping   gate 100%   khatian-only 100%
+ Khas land sale   gate 100%   khatian-only 100%
+ Pending case     gate 100%   khatian-only 100%
+```
 
 **Caveats, stated plainly:**
 
