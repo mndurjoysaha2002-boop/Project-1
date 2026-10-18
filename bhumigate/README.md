@@ -6,7 +6,7 @@ Track: Digital Land Records, Verification & Digitization · Problem statement: *
 
 > **All data in this repository is synthetic (dummy).** No real person, NID, address or land record is collected, used or displayed. No government portal is scraped, queried or tested.
 
-![BhumiGate gate screen: a double sale is blocked and a khatian-only check would have missed it](docs/screenshots/01-gate.png)
+
 
 ## Team
 
